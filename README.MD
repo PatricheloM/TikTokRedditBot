@@ -32,24 +32,24 @@
  - **numberOfVidsPerPost**: Number of vids per subreddit.
  
  #### Example ``settings.json``:
- ``json
+ ```json
  {
 	"backgroundVideoPath": "background/minecraftParkourVideo.mp4",
 	"subredditUrlOrFileName": "https://reddit.com/r/askreddit/top/",
 	"numberOfVidsPerPost": 3
 }
- ``
+ ```
  
  ## <a name="cursewords">NSFW word censor:
  You can also choose the words that you want censored out. There is a ``cursewords.json`` file in the ``resources`` folder. The name of the json object is the word that you want to replace and the value is the word that you want it to be replaced with.
   #### Example ``cursewords.json``:
- ``json
+ ```json
  {
 	"cat": "meow",
 	"dog": "bark",
 	"food": "drink"
 }
- ``
+ ```
  
  ## ETC:
  - There is a ``clear.bat`` int the ``resources`` folder. Recommended to use after the bot rendered a full subreddit and you want to make videos from the same one but with another sorting becouse the files may interfere with eachother.
