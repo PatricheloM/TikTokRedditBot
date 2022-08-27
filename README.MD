@@ -6,7 +6,7 @@
 ## Technologies used:
  - .NET core 3.1 (*C#*)
   - Newtonsoft JSON library for C# (*Newtonsoft.Json*)
-  - Microsoft T2S library for C# (*System.Speach*)
+  - Microsoft T2S library for C# (*System.Speech*)
   - FFMPEG
  - pyhton3 (*Selenium*, *Pillow*, *BeautifulSoup4*)
   - Chrome Webdriver
