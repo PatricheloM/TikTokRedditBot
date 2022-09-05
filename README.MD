@@ -26,7 +26,7 @@
  ## <a name="settings">Settings:
  You can find three objects in the json file:
  - **backgroundVideoPath**: the relative path to the video that you want the background to be.
- > **Note:** this video have to be somewhat long due to the bot can not loop a short video. The start time is randomly selected.
+ > **Note:** this video has to be somewhat long due to the bot can not loop a short video. The start time is randomly selected.
  - **subredditUrlOrFileName**: The link to the subreddit that you want videos from. Or download the RSS file and copy it to the root folder.
  > **Note:** if you are using an RSS file leave the .rss extension. Also you can use subreddit sorting such as ``/top/``.
  - **numberOfVidsPerPost**: Number of vids per subreddit.
@@ -39,6 +39,7 @@
 	"numberOfVidsPerPost": 3
 }
  ```
+With this example the bot will render 3 videos from the current top posts from the AskReddit subreddit with a randomly selected clip from the ``background/minecraftParkourVideo.mp4``.
  
  ## <a name="cursewords">NSFW word censor:
  You can also choose the words that you want censored out. There is a ``cursewords.json`` file in the ``resources`` folder. The name of the json object is the word that you want to replace and the value is the word that you want it to be replaced with.
@@ -50,6 +51,7 @@
 	"food": "drink"
 }
  ```
+With this example the bot will replace every "cat" with "meow", every "dog" with "bark" and every "food" with "drink" in the titles and in the comments.
  
  ## ETC:
  - There is a ``clear.bat`` int the ``resources`` folder. Recommended to use after the bot rendered a full subreddit and you want to make videos from the same one but with another sorting becouse the files may interfere with eachother.
