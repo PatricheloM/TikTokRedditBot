@@ -55,6 +55,7 @@ With this example the bot will replace every "cat" with "meow", every "dog" with
  
  ## ETC:
  - There is a ``clear.bat`` int the ``resources`` folder. Recommended to use after the bot rendered a full subreddit and you want to make videos from the same one but with another sorting becouse the files may interfere with eachother.
- - For compilation I would recommend [Mono](https://www.mono-project.com/ "Mono website"). An open source implementation of Microsoft's .NET Framework.
+ - ~~For compilation I would recommend Mono. An open source implementation of Microsoft's .NET Framework.~~
+ - For compilation with the new commit I would recommend importing the project to Visual Studio. But you can still use [Mono](https://www.mono-project.com/ "Mono website") if you want.
  - If you downloaded the NuGet packages (.nupkg) for the .dll files you have to decompress them and find the suitable for the .NET 3.1 core. Any other versions may result in unintended behaviour.
  
