@@ -1,16 +1,16 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using tiktokBot.util;
+using TiktokBot.Util;
 
 
-namespace tiktokBot.video
+namespace TiktokBot.Video
 {
-    class videoTrimmerBasedOfLengthOfAllAudio
+    static class VideoTrimmerBasedOfLengthOfAllAudio
     {
-        public static void saveAllVideos(string title)
+        public static void SaveAllVideos(string title)
         {
-            string validDirName = stringUtil.directoryNameHelper(title);
+            string validDirName = StringUtil.DirectoryNameHelper(title);
             string[] sounds = Directory.GetFiles("sounds\\" + validDirName, "*.wav");
             Directory.CreateDirectory("videos/" + validDirName);
 
@@ -19,10 +19,10 @@ namespace tiktokBot.video
 
             foreach (var sound in sounds)
             {
-                backgroundVideoTrimmer.trimVideo(settingsGetter.getSettings().backgroundVideoPath, 
+                BackgroundVideoTrimmer.TrimVideo(SettingsGetter.GetSettings().BackgroundVideoPath, 
                     validDirName + "/" + sound.Split("\\").AsQueryable().Last().Split(".")[0] + ".mp4", 
-                    randomUtil.randomStartFrame(Convert.ToInt32(mediaLengthUtil.length(settingsGetter.getSettings().backgroundVideoPath)),
-                    Convert.ToInt32(mediaLengthUtil.length(sound))), Convert.ToInt32(mediaLengthUtil.length(sound)));
+                    RandomUtil.RandomStartFrame(Convert.ToInt32(MediaLengthUtil.Length(SettingsGetter.GetSettings().BackgroundVideoPath)),
+                    Convert.ToInt32(MediaLengthUtil.Length(sound))), Convert.ToInt32(MediaLengthUtil.Length(sound)));
                 Console.WriteLine("\tSaved video {0}, {1} remaining.", counter, length - counter);
                 counter++;
             }

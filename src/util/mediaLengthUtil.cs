@@ -2,16 +2,18 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace tiktokBot.util
+namespace TiktokBot.Util
 {
-    class mediaLengthUtil
+    static class MediaLengthUtil
     {
-        public static double length(string mediaPath)
+        public static double Length(string mediaPath)
         {
-            ProcessStartInfo processStartInfo = new ProcessStartInfo();
-            processStartInfo.FileName = $"ffmpeg/ffprobe.exe";
-            processStartInfo.Arguments = "-v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 " + mediaPath;
-            processStartInfo.RedirectStandardOutput = true;
+            ProcessStartInfo processStartInfo = new ProcessStartInfo
+            {
+                FileName = $"Ffmpeg/ffprobe.exe",
+                Arguments = "-v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 " + mediaPath,
+                RedirectStandardOutput = true
+            };
             Process P = Process.Start(processStartInfo);
             P.StartInfo.RedirectStandardOutput = true;
             StreamReader sr = P.StandardOutput;

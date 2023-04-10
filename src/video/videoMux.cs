@@ -2,21 +2,21 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using tiktokBot.util;
+using TiktokBot.Util;
 
-namespace tiktokBot.video
+namespace TiktokBot.Video
 {
-    class videoMux
+    static class VideoMux
     {
-        private static void muxVideoWithAudio(string video, string audio, string outputFilePath)
+        private static void MuxVideoWithAudio(string video, string audio, string outputFilePath)
         {
-            Process P = Process.Start($"ffmpeg/ffmpeg.exe", "-hide_banner -loglevel error -i " + video + " -i " + audio + " -c:v copy -c:a aac muxed/" + outputFilePath);
+            Process P = Process.Start($"Ffmpeg/ffmpeg.exe", "-hide_banner -loglevel error -i " + video + " -i " + audio + " -c:v copy -c:a aac muxed/" + outputFilePath);
             P.WaitForExit();
         }
 
-        public static void muxAllVideosWithAudio(string title)
+        public static void MuxAllVideosWithAudio(string title)
         {
-            string validDirName = stringUtil.directoryNameHelper(title);
+            string validDirName = StringUtil.DirectoryNameHelper(title);
             string[] sounds = Directory.GetFiles("sounds\\" + validDirName, "*.wav");
             Directory.CreateDirectory("muxed/" + validDirName);
 
@@ -25,7 +25,7 @@ namespace tiktokBot.video
 
             foreach (var sound in sounds)
             {
-                muxVideoWithAudio("videos/" + validDirName + "/" + sound.Split("\\").AsQueryable().Last().Split(".")[0] + ".mp4", sound, 
+                MuxVideoWithAudio("videos/" + validDirName + "/" + sound.Split("\\").AsQueryable().Last().Split(".")[0] + ".mp4", sound, 
                     validDirName + "/" + sound.Split("\\").AsQueryable().Last().Split(".")[0] + ".mp4");
                 Console.WriteLine("\tSaved mux {0}, {1} remaining.", counter, length - counter);
                 counter++;

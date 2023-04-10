@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Net;
-using tiktokBot.web;
-using tiktokBot.video;
-using tiktokBot.text;
-using tiktokBot.util;
+using TiktokBot.Web;
+using TiktokBot.Video;
+using TiktokBot.Text;
+using TiktokBot.Util;
 using System.IO;
 
-namespace tiktokBot
+namespace TiktokBot
 {
-    class main
+    class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            initUtil.init();
-            string log = "logs/" + stringUtil.directoryNameHelper(DateTime.Now.ToString()) + "-log.log";
-            string url = settingsGetter.getSettings().subredditUrlOrFileName + ".rss";
-            int quantity = settingsGetter.getSettings().numberOfVidsPerPost;
+            InitUtil.Init();
+            string log = "logs/" + StringUtil.DirectoryNameHelper(DateTime.Now.ToString()) + "-log.log";
+            string url = SettingsGetter.GetSettings().SubredditUrlOrFileName + ".rss";
+            int quantity = SettingsGetter.GetSettings().NumberOfVidsPerPost;
             int threshold;
             if (quantity < 7) threshold = quantity * 25; // due to the screenshotting method we cant calculate the threshold to be perfect
             else threshold = 175; // maximum comments per rss is 200
 
             try
             {
-                var titleLinkPairs = rssSerializer.getSubreddit(url);
+                var titleLinkPairs = RssSerializer.GetSubreddit(url);
 
                 foreach (var pair in titleLinkPairs)
                 {
@@ -31,29 +31,29 @@ namespace tiktokBot
                         Console.WriteLine("\n{0}\n[{1}]\n", pair.Key, pair.Value);
                         File.AppendAllText(log, String.Format("\n{0}\n[{1}]\n", pair.Key, pair.Value));
 
-                        if (rssSerializer.getCommentCount(pair.Value.Substring(0, pair.Value.IndexOf("?sort=top&depth=1")) + ".rss?sort=top&depth=1") < threshold)
+                        if (RssSerializer.GetCommentCount(pair.Value[..pair.Value.IndexOf("?sort=top&depth=1")] + ".rss?sort=top&depth=1") < threshold)
                         {
                             Console.WriteLine("\t--- Not enough comments! Going to the next post... ---\n");
                             File.AppendAllText(log, "\t--- Not enough comments! Going to the next post... ---\n");
                             continue;
                         }
 
-                        imageGetter.getTitleImage(pair.Key, pair.Value.Substring(0, pair.Value.IndexOf("?sort=top&depth=1")));
+                        ImageGetter.GetTitleImage(pair.Key, pair.Value[..pair.Value.IndexOf("?sort=top&depth=1")]);
                         Console.WriteLine("\t--- Saved title image! ---\n");
 
-                        imageGetter.getCommentImages(pair.Key, pair.Value, quantity);
+                        ImageGetter.GetCommentImages(pair.Key, pair.Value, quantity);
                         Console.WriteLine("\t--- Saved comment images! ---\n");
 
-                        textToSpeech.saveAllSoundFiles(pair.Key, stringUtil.getCommentsFromTxt(pair.Key)); //rssSerializer.getComments(pair.Value, quantity));
+                        TextToSpeech.SaveAllSoundFiles(pair.Key, StringUtil.GetCommentsFromTxt(pair.Key)); //rssSerializer.getComments(pair.Value, quantity));
                         Console.WriteLine("\t--- Saved audio files! ---\n");
 
-                        videoTrimmerBasedOfLengthOfAllAudio.saveAllVideos(pair.Key);
+                        VideoTrimmerBasedOfLengthOfAllAudio.SaveAllVideos(pair.Key);
                         Console.WriteLine("\t--- Saved video files! ---\n");
 
-                        videoMux.muxAllVideosWithAudio(pair.Key);
+                        VideoMux.MuxAllVideosWithAudio(pair.Key);
                         Console.WriteLine("\t--- Saved muxed files! ---\n");
 
-                        imageAdder.makeVideos(pair.Key, pair.Value, quantity);
+                        ImageAdder.MakeVideos(pair.Key);
                         Console.WriteLine("\t--- Saved finished files! ---\n");
 
                         Console.WriteLine("\t--- Finished rendering {0} videos! ---\n", quantity);

@@ -1,15 +1,15 @@
-﻿using tiktokBot.json;
+﻿using TiktokBot.Json;
 using System.Collections.Generic;
 
-namespace tiktokBot.util
+namespace TiktokBot.Util
 {
-    class curseWordsGetter
+    static class CurseWordsGetter
     {
-        private static jsonHandling<Dictionary<string, string>> json = jsonHandling<Dictionary<string, string>>.getCurseWordsInstance();
+        private static readonly JsonHandling<Dictionary<string, string>> Json = JsonHandling<Dictionary<string, string>>.GetCurseWordsInstance();
 
-        public static Dictionary<string, string> getCurseWords()
+        public static Dictionary<string, string> GetCurseWords()
         {
-            return json.jsonObject;
+            return Json.JsonObject;
         }
     }
 }

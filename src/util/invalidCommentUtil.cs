@@ -1,10 +1,10 @@
-﻿namespace tiktokBot.util
+﻿namespace TiktokBot.Util
 {
-    class invalidCommentUtil
+    static class InvalidCommentUtil
     {
         private const string DELETED_OR_NULL = "[deleted]";
 
-        public static string getDeletedOrNullConst()
+        public static string GetDeletedOrNullConst()
         {
             return DELETED_OR_NULL;
         }

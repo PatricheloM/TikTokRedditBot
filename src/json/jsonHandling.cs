@@ -1,41 +1,34 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 
-namespace tiktokBot.json
+namespace TiktokBot.Json
 {
-    class settings
+    class JsonHandling<T>
     {
-        public string backgroundVideoPath { get; set; }
-        public string subredditUrlOrFileName { get; set; }
-        public int numberOfVidsPerPost { get; set; }
-    }
+        public T JsonObject { get; set; }
 
-    class jsonHandling<T>
-    {
-        public T jsonObject { get; set; }
+        private static readonly JsonHandling<T> InstanceSettings = new JsonHandling<T>("settings");
 
-        private static jsonHandling<T> instanceSettings = new jsonHandling<T>("settings");
+        private static readonly JsonHandling<T> InstanceCurseWords = new JsonHandling<T>("cursewords");
 
-        private static jsonHandling<T> instanceCurseWords = new jsonHandling<T>("cursewords");
-
-        public static jsonHandling<T> getSettingsInstance()
+        public static JsonHandling<T> GetSettingsInstance()
         {
-            return instanceSettings;
+            return InstanceSettings;
         }
 
-        public static jsonHandling<T> getCurseWordsInstance()
+        public static JsonHandling<T> GetCurseWordsInstance()
         {
-            return instanceCurseWords;
+            return InstanceCurseWords;
         }
 
-        private jsonHandling(string jsonName)
+        private JsonHandling(string jsonName)
         {
             string json;
-            using (StreamReader r = new StreamReader("resources/" + jsonName + ".json"))
+            using (StreamReader r = new StreamReader("Resources/" + jsonName + ".json"))
             {
                 json = r.ReadToEnd();
             }
-            jsonObject = JsonConvert.DeserializeObject<T>(json);
+            JsonObject = JsonConvert.DeserializeObject<T>(json);
         }
     }
 }

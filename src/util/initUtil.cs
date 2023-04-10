@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 
-namespace tiktokBot.util
+namespace TiktokBot.Util
 {
-    class initUtil
+    static class InitUtil
     {
-        public static void init()
+        public static void Init()
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 

@@ -1,14 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Web;
 using System.Xml;
 using System.Xml.Linq;
-using tiktokBot.util;
+using TiktokBot.Util;
 
-namespace tiktokBot.web
+namespace TiktokBot.Web
 {
-    class rssSerializer : sourceGetter
+    static class RssSerializer
     {
+        private static string DowloadSource(string url)
+        {
+            WebClient client = new WebClient();
+            string returnVal = client.DownloadString(url);
+            client.Dispose();
+
+            return returnVal;
+        }
+
         private static string formatXml(string xml)
         {
             try
@@ -22,12 +32,12 @@ namespace tiktokBot.web
             }
         }
 
-        public static Dictionary<string, string> getSubreddit(string rssUrl)
+        public static Dictionary<string, string> GetSubreddit(string rssUrl)
         {
             Dictionary<string, string> returnVals = new Dictionary<string, string>();
 
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(formatXml(sourceGetter.dowloadSource(rssUrl)));
+            doc.LoadXml(formatXml(DowloadSource(rssUrl)));
             XmlNode root = doc.FirstChild;
 
             List<string> titles = new List<string>();
@@ -47,7 +57,7 @@ namespace tiktokBot.web
                     {
                         if (entry.ChildNodes.Item(j).Name == "title")
                         {
-                            Dictionary<string, string> curse = curseWordsGetter.getCurseWords();
+                            Dictionary<string, string> curse = CurseWordsGetter.GetCurseWords();
                             string addable = HttpUtility.HtmlDecode(entry.ChildNodes.Item(j).InnerText);
 
                             foreach (var word in curse)
@@ -60,7 +70,7 @@ namespace tiktokBot.web
                         else if (entry.ChildNodes.Item(j).Name == "link")
                         {
                             string link = entry.ChildNodes.Item(j).Attributes["href"].Value;
-                            links.Add(link.Substring(0, link.Length - 1) + "?sort=top&depth=1");
+                            links.Add(link[..^1] + "?sort=top&depth=1");
                         }
                     }
                 }
@@ -75,12 +85,12 @@ namespace tiktokBot.web
         }
 
         // deprecated due to the latency between the image and rss getters producing non-matching sound-image combination
-        public static List<string> getComments(string postRssUrl, int videoQuantity)
+        public static List<string> GetComments(string postRssUrl, int videoQuantity)
         {
             List<string> comments = new List<string>();
 
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(formatXml(sourceGetter.dowloadSource(postRssUrl)));
+            doc.LoadXml(formatXml(DowloadSource(postRssUrl)));
             XmlNode root = doc.FirstChild;
 
             if (videoQuantity < Math.Floor((decimal) root.ChildNodes.Count / 5))
@@ -100,8 +110,8 @@ namespace tiktokBot.web
                         {
                             if (entry.ChildNodes.Item(j).Name == "content")
                             {
-                                string comment = stringUtil.betweenParagraph(entry.ChildNodes.Item(j).InnerText);
-                                if (comment == invalidCommentUtil.getDeletedOrNullConst())
+                                string comment = StringUtil.BetweenParagraph(entry.ChildNodes.Item(j).InnerText);
+                                if (comment == InvalidCommentUtil.GetDeletedOrNullConst())
                                 {
                                     root.ChildNodes.Item(i).ParentNode.RemoveChild(root.ChildNodes.Item(i));
                                     i--;
@@ -123,10 +133,10 @@ namespace tiktokBot.web
             return comments;
         }
 
-        public static int getCommentCount(string postRssUrl)
+        public static int GetCommentCount(string postRssUrl)
         {
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(formatXml(sourceGetter.dowloadSource(postRssUrl)));
+            doc.LoadXml(formatXml(DowloadSource(postRssUrl)));
             XmlNode root = doc.FirstChild;
 
             return root.ChildNodes.Count;

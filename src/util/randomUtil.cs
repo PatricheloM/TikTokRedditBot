@@ -1,14 +1,14 @@
 ﻿using System;
 
-namespace tiktokBot.util
+namespace TiktokBot.Util
 {
-    class randomUtil
+    static class RandomUtil
     {
-        private static Random rnd = new Random();
+        private static readonly Random Rnd = new Random();
 
-        public static int randomStartFrame(int videoLength, int videoDuration)
+        public static int RandomStartFrame(int videoLength, int videoDuration)
         {
-            return rnd.Next(0, videoLength - videoDuration);
+            return Rnd.Next(0, videoLength - videoDuration);
         }
     }
 }

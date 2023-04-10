@@ -1,14 +1,14 @@
-﻿using tiktokBot.json;
+﻿using TiktokBot.Json;
 
-namespace tiktokBot.util
+namespace TiktokBot.Util
 {
-    class settingsGetter
+    static class SettingsGetter
     {
-        private static jsonHandling<settings> json = jsonHandling<settings>.getSettingsInstance();
+        private static readonly JsonHandling<Settings> Json = JsonHandling<Settings>.GetSettingsInstance();
 
-        public static settings getSettings()
+        public static Settings GetSettings()
         {
-            return json.jsonObject;
+            return Json.JsonObject;
         }
     }
 }
